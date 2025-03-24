@@ -5,7 +5,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const stripe = new Stripe('sk_test_RIcGuV6eFYj1BOoNV1xPMnEi');
+  const STRIPE_SECRET_KEY = 'test';
+  const stripe = new Stripe(STRIPE_SECRET_KEY);
   const result = await stripe.customers.create({
     description: `Test Customer from Next.js ${new Date().toISOString()}`,
   });
