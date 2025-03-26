@@ -12,7 +12,7 @@ const UserProfilePage = () => {
     // Fetch user data based on the userId
     const fetchUser = async () => {
       try {
-        const fetchedProfile = await service.getByFieldValue(
+        const fetchedProfile = await service.getByFieldValue<Profile>(
           'user_id',
           user?.user?.id as string
         );

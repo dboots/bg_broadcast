@@ -21,7 +21,7 @@ export class SupabaseService<T> {
     return data as T[];
   }
 
-  async getByFieldValue(field: string, value: string): Promise<T | null> {
+  async getByFieldValue<T>(field: string, value: string): Promise<T> {
     const { data, error } = await this.supabase
       .from(this.tableName)
       .select('*')
