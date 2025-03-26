@@ -1,11 +1,11 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { Tables } from '../../database.types';
 import moment from 'moment';
 import { getSupabaseClient } from '@/lib/supabase';
+import { Player, Profile, Session } from '@/types';
 
-type PlayerType = Tables<'players'> & { profile: Tables<'profile'> | null };
+type PlayerType = Player & { profile: Profile | null };
 
-type QueryType = Omit<Tables<'session'>, 'players'> & {
+type QueryType = Omit<Session, 'players'> & {
   players: PlayerType[];
 };
 
