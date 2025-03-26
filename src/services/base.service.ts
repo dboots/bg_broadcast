@@ -2,7 +2,7 @@ import { getSupabaseClient } from '@/lib/supabase';
 
 export class SupabaseService<T> {
   private tableName: string;
-  private supabase = getSupabaseClient();
+  public supabase = getSupabaseClient();
 
   constructor(tableName: string) {
     this.tableName = tableName;
