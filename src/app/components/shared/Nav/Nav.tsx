@@ -1,5 +1,5 @@
 import useAuth from '@/hooks/useAuth';
-import { getAuth } from 'firebase/auth';
+import { getSupabaseClient } from '@/lib/supabase';
 import Link from 'next/link';
 
 const Nav: React.FC = () => {
@@ -15,7 +15,7 @@ const Nav: React.FC = () => {
             alt='Flowbite Logo'
           />
           <span className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'>
-            Absentee
+            Board Game Broadcast
           </span>
         </Link>
         <button
@@ -54,7 +54,15 @@ const Nav: React.FC = () => {
                   <Link href='/profile'>Profile</Link>
                 </li>
                 <li>
-                  <div onClick={() => getAuth().signOut()}>Logout</div>
+                  <div
+                    onClick={async () => {
+                      console.log('here');
+                      const supabase = getSupabaseClient();
+                      await supabase.auth.signOut();
+                    }}
+                  >
+                    Logout
+                  </div>
                 </li>
               </>
             ) : (

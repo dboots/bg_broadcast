@@ -1,13 +1,11 @@
 import Listings from '@/app/components/Listings/Listings';
 import Auction from '@/models/auction.model';
-import { AuctionService } from '@/services/auction.service';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 export const getServerSideProps: GetServerSideProps<{
   auctions: Auction[];
 }> = async () => {
-  const service = new AuctionService();
-  const auctions = await service.read<Auction>('auctions');
+  const auctions: Auction[] = [];
   return { props: { auctions } };
 };
 

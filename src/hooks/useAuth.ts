@@ -1,21 +1,24 @@
-import firebase_app, { auth } from '@/app/firebase/config';
-import { User } from 'firebase/auth';
+import { getSupabaseClient } from '@/lib/supabase';
+import { AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 
 export default function useAuth() {
-    const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Session | null>(null);
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                setUser(user);
-            } else {
-                setUser(null);
-            }
-        });
+  useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_SUPABASE_URL);
+    const supabase = getSupabaseClient();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(
+      (event: AuthChangeEvent, session: Session | null) => {
+        console.log(event, session);
+        setUser(session);
+      }
+    );
 
-        return () => unsubscribe();
-    }, []);
+    return () => subscription.unsubscribe();
+  }, []);
 
-    return user;
+  return user;
 }
