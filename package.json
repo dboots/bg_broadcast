@@ -42,5 +42,11 @@
   "engines": {
     "node": "20.19.0"
   },
-  "entrypoint": "deploy.sh"
+  "dockerfile": {
+    "secrets": [
+      "NEXT_PUBLIC_SUPABASE_URL",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+    ],
+    "entrypoint": "deploy.sh"
+  }
 }
