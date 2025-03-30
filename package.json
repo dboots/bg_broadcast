@@ -41,5 +41,6 @@
   },
   "engines": {
     "node": "20.19.0"
-  }
+  },
+  "entrypoint": "deploy.sh"
 }
