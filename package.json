@@ -10,6 +10,7 @@
     "gen": "supabase gen types typescript --project-id zuifsdjebrqjivhiougl > database.types.ts"
   },
   "dependencies": {
+    "@heroui/select": "^2.4.16",
     "@next/env": "^15.2.3",
     "@nextui-org/react": "^2.2.9",
     "@stripe/stripe-js": "^2.2.0",

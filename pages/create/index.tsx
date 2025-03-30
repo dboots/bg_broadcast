@@ -343,7 +343,11 @@ export default function Page({}: InferGetServerSidePropsType<
         slug: sessionSlug,
         game: selectedGame.name,
         session_date: formattedDate,
-        bgg_id: selectedGame.id,
+        bgg_id: parseInt(selectedGame.id),
+        players: null, // TODO: Add player management
+        description: null, // TODO: Add description management
+        is_public: true, // TODO: Add public/private toggle
+        zip: null, // TODO: Add zip code management
       });
 
       router.push(`/session/${sessionSlug}`);

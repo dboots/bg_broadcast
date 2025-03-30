@@ -11,9 +11,8 @@ import {
   Divider,
   Input,
   Spinner,
-  Select,
-  SelectItem,
 } from '@nextui-org/react';
+import { Select, SelectSection, SelectItem } from '@heroui/select';
 import Link from 'next/link';
 import Head from 'next/head';
 import useAuth from '@/hooks/useAuth';
@@ -191,8 +190,8 @@ export default function HomePage({
           setProfile(userProfile);
 
           // If the user profile has a zip code, use it
-          if (userProfile?.zipCode) {
-            setUserZipCode(userProfile.zipCode);
+          if (userProfile?.zip) {
+            setUserZipCode(userProfile.zip);
           }
         } catch (error) {
           console.error('Error fetching user profile:', error);
@@ -206,14 +205,14 @@ export default function HomePage({
   useEffect(() => {
     // Update distances when user zip code changes
     if (userZipCode && userZipCode.length === 5) {
-      const sessionsWithDistance = initialSessions.map((session) => ({
+      const sessionsWithDistance = initialSessions.map((session: GameSession) => ({
         ...session,
         distance: calculateDistance(userZipCode, session.zipCode),
       }));
 
       // Sort by distance
       const sortedSessions = sessionsWithDistance.sort(
-        (a, b) => (a.distance || 999) - (b.distance || 999)
+        (a: GameSession, b: GameSession) => (a.distance || 999) - (b.distance || 999)
       );
 
       setSessions(sortedSessions);
@@ -254,6 +253,7 @@ export default function HomePage({
 
   // Extract unique game types for filter dropdown
   const gameTypes = [...new Set(sessions.map((session) => session.gameType))];
+  console.log(gameTypes);
 
   return (
     <>
@@ -296,18 +296,9 @@ export default function HomePage({
                 selectedKeys={[maxDistance.toString()]}
                 onChange={(e) => setMaxDistance(Number(e.target.value))}
               >
-                <SelectItem key='10' value={10}>
-                  10 miles
-                </SelectItem>
-                <SelectItem key='25' value={25}>
-                  25 miles
-                </SelectItem>
-                <SelectItem key='50' value={50}>
-                  50 miles
-                </SelectItem>
-                <SelectItem key='100' value={100}>
-                  100 miles
-                </SelectItem>
+                {[10, 25, 50, 100].map((distance) => (
+                  <SelectItem key={distance}>{distance} miles</SelectItem>
+                ))}
               </Select>
             </div>
 
@@ -318,13 +309,8 @@ export default function HomePage({
                 selectedKeys={[gameTypeFilter]}
                 onChange={(e) => setGameTypeFilter(e.target.value)}
               >
-                <SelectItem key='all' value='all'>
-                  All Games
-                </SelectItem>
                 {gameTypes.map((type) => (
-                  <SelectItem key={type} value={type}>
-                    {type}
-                  </SelectItem>
+                  <SelectItem key={type}>{type}</SelectItem>
                 ))}
               </Select>
             </div>
@@ -336,18 +322,11 @@ export default function HomePage({
                 selectedKeys={[statusFilter]}
                 onChange={(e) => setStatusFilter(e.target.value)}
               >
-                <SelectItem key='all' value='all'>
-                  All Status
-                </SelectItem>
-                <SelectItem key='upcoming' value='upcoming'>
-                  Upcoming
-                </SelectItem>
-                <SelectItem key='ongoing' value='ongoing'>
-                  Ongoing
-                </SelectItem>
-                <SelectItem key='completed' value='completed'>
-                  Completed
-                </SelectItem>
+                {['all', 'upcoming', 'ongoing', 'completed'].map((status) => (
+                  <SelectItem key={status}>
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                  </SelectItem>
+                ))}
               </Select>
             </div>
           </div>
