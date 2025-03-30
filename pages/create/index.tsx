@@ -343,6 +343,7 @@ export default function Page({}: InferGetServerSidePropsType<
         slug: sessionSlug,
         game: selectedGame.name,
         session_date: formattedDate,
+        bgg_id: selectedGame.id,
       });
 
       router.push(`/session/${sessionSlug}`);
