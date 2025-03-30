@@ -30,7 +30,11 @@ RUN yarn install --frozen-lockfile --production=false
 COPY . .
 
 # Build application
-RUN yarn run build
+RUN --mount=type=secret,id=NEXT_PUBLIC_SUPABASE_URL \
+    --mount=type=secret,id=NEXT_PUBLIC_SUPABASE_ANON_KEY \
+    NEXT_PUBLIC_SUPABASE_URL="$(cat /run/secrets/NEXT_PUBLIC_SUPABASE_URL)" \
+    NEXT_PUBLIC_SUPABASE_ANON_KEY="$(cat /run/secrets/NEXT_PUBLIC_SUPABASE_ANON_KEY)" \
+    yarn run build
 
 # Remove development dependencies
 RUN yarn install --production=true
